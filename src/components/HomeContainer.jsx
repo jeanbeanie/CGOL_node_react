@@ -2,73 +2,7 @@
 /* @flow */
 
 import React from 'react';
-
-class Box extends React.Component {
-  constructor(props){
-    super(props);
-    this.selectBox = this.selectBox.bind(this);
-  }
-
-  selectBox() {
-    this.props.selectBox(this.props.row, this.props.col);
-  }
-
-  render() {
-    return (
-      <div
-        className={this.props.boxClass}
-        id={this.props.id}
-        onClick={this.selectBox}
-      />
-    );
-  }
-}
-
-class Grid extends React.Component <{}> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      width: this.props.cols * 14,
-      rowsArr: [],
-    }
-  }
-  componentDidMount() {
-    this.generateRowsArray();
-  }
-
-  generateRowsArray() {
-    const {
-      rows, cols, gridFull, selectBox,
-    } = this.props;
-    const rowsArr = [];
-    let boxClass = '';
-
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        const boxId = `${i}_${j}`;
-        boxClass = gridFull[i][j] ? 'box on' : 'box off';
-        rowsArr.push(<Box
-          boxClass={boxClass}
-          key={boxId}
-          boxId={boxId}
-          row={i}
-          col={j}
-          selectBox={selectBox}
-        />);
-      }
-    }
-    this.setState({ rowsArr });
-  }
-
-  render() {
-    const { width } = this.state;
-    return (
-      <div className="grid" style={{ width }}>
-        {this.state.rowsArr}
-      </div>
-    );
-  }
-}
+import Grid from './Grid';
 
 class HomeContainer extends React.Component <{}> {
   constructor(props: {}) {
@@ -114,4 +48,5 @@ class HomeContainer extends React.Component <{}> {
     );
   }
 }
+
 export default HomeContainer;
