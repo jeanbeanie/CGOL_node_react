@@ -25,10 +25,13 @@ class Buttons extends React.Component {
         <button className="btn btn-default" onClick={this.props.seed}>
           Seed
         </button>
-        <button className="btn btn-default" onClick={this.props.playButton}>
+        <button className="btn btn-default" onClick={this.props.clear}>
+          Clear
+        </button>
+        <button className="btn btn-default" onClick={this.props.play}>
           Play
         </button>
-        <button className="btn btn-default" onClick={this.props.pauseButton}>
+        <button className="btn btn-default" onClick={this.props.pause}>
           Pause
         </button>
         <select value={this.state.speedValue} onChange={this.handleSpeedChange}>
@@ -117,6 +120,15 @@ class HomeContainer extends React.Component <{}> {
     clearInterval(this.intervalId);
   }
 
+  clearButton = () => {
+    const grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+    this.setState({
+        grid,
+        generation: 0,
+    });
+    this.pauseButton();
+  }
+
   // called when user selects an individual box component
   selectBox = (row, col) => {
     // create copy of grid array so we can modify it
@@ -171,8 +183,8 @@ class HomeContainer extends React.Component <{}> {
         <h1 id="site-title">{title}</h1>
         <h5>Generations: {this.state.generation}</h5>
         <Buttons
-          playButton={this.playButton}
-          pauseButton={this.pauseButton}
+          play={this.playButton}
+          pause={this.pauseButton}
           changeSpeed= {this.changeSpeed}
           gridSize={this.changeGridSize}
           clear={this.clearButton}
