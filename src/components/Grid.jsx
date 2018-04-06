@@ -7,18 +7,11 @@ import Box from './Box';
 class Grid extends React.Component <{}> {
   constructor(props: {}) {
     super(props);
-    this.state = {
-      width: this.props.cols * 14,
-      rowsArr: [],
-    }
-  }
-  componentDidMount() {
-    this.generateRowsArray();
   }
 
-  generateRowsArray() {
+  render() {
     const {
-      rows, cols, gridFull, selectBox,
+      rows, cols, gridArray, selectBox,
     } = this.props;
     const rowsArr = [];
     let boxClass = '';
@@ -26,7 +19,7 @@ class Grid extends React.Component <{}> {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         const boxId = `${i}_${j}`;
-        boxClass = gridFull[i][j] ? 'box on' : 'box off';
+        boxClass = gridArray[i][j] ? 'box on' : 'box off';
         rowsArr.push(<Box
           boxClass={boxClass}
           key={boxId}
@@ -37,14 +30,10 @@ class Grid extends React.Component <{}> {
         />);
       }
     }
-    this.setState({ rowsArr });
-  }
-
-  render() {
-    const { width } = this.state;
+    const width = cols * 14;
     return (
       <div className="grid" style={{ width }}>
-        {this.state.rowsArr}
+        {rowsArr}
       </div>
     );
   }

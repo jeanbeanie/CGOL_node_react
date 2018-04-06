@@ -13,7 +13,8 @@ class HomeContainer extends React.Component <{}> {
 
     this.state = {
       generation: 0,
-      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
+      // create an array of arrays to represent grid
+      grid: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
     };
   }
 
@@ -29,8 +30,16 @@ class HomeContainer extends React.Component <{}> {
     }).catch(err => console.log('Error loading data in HomeContainer', err));
   }
 
-  selectBox() {
-    console.log('Box selected');
+  // arrow functions style insures correct 'this' is inside it
+  selectBox = (row, col) => {
+    // create copy of grid array so we can modify it
+    let grid = this.state.grid;
+    // flip the bool value of the spot in arr that corresponds to box component
+    grid[row][col] = !grid[row][col];
+    // set grid to our updated grid
+    this.setState({
+      grid: grid,
+    })
   }
 
   render() {
@@ -39,7 +48,7 @@ class HomeContainer extends React.Component <{}> {
       <div className="text-center">
         <h1 id="site-title" className="rounded">{title}</h1>
         <Grid
-          gridFull={this.state.gridFull}
+          gridArray={this.state.grid}
           rows={this.rows}
           cols={this.cols}
           selectBox={this.selectBox}
