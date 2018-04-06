@@ -3,17 +3,20 @@ body {
   background-size: auto;
 }
 
-h1 {
+h1, h2, h3, h4, h5 {
   color: white;
   margin: auto;
   text-align: center;
   width: 50%;
+  background-color:green;
+  padding: 0.5rem;
   margin-top: 10px;
+  border-radius: 2rem;
+  border: 1px solid black;
+  box-shadow: 0px 0px 1rem #77421c;
 }
 
 #site-title {
-  padding: 1rem;
-  background-color:green;
 }
   
 .box {
