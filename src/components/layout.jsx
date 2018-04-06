@@ -12,6 +12,9 @@ type Props = {
 const Layout = (props: Props) => (
   <div className="container" id="layout-container">
     {props.children}
+    <footer className="text-center">
+      Made with <span role="img" aria-label="love">🌺</span>  by <a href="http://www.github.com/jeanbeanie" rel="noopener noreferrer" target="_blank">Jean</a>
+    </footer>
   </div>
 );
 
