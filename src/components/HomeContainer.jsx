@@ -11,9 +11,9 @@ class HomeContainer extends React.Component <{}> {
     this.speed = 100;
     this.rows = 30;
     this.cols = 50;
-    isPaused: true,
 
     this.state = {
+      isPaused: true,
       generation: 0,
       // create an array of arrays to represent grid
       grid: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
@@ -41,7 +41,9 @@ class HomeContainer extends React.Component <{}> {
     }
     // every interval of this.speed, call this.play
     this.intervalId = setInterval(this.play, this.speed);
-    this.isPaused = false;
+    this.setState({
+      isPaused: false,
+    });
   }
 
   // run one generation
@@ -82,7 +84,9 @@ class HomeContainer extends React.Component <{}> {
   // pauses simulation
   pauseButton = () => {
     clearInterval(this.intervalId);
-    this.isPaused = true;
+    this.setState({
+      isPaused: true,
+    });
   }
 
   clearButton = () => {
@@ -166,9 +170,10 @@ class HomeContainer extends React.Component <{}> {
         <div id="toolbar">
           <h6>GENERATIONS: {this.state.generation}</h6>
           <Buttons
+            isPaused={this.state.isPaused}
             play={this.playButton}
             pause={this.pauseButton}
-            changeSpeed= {this.changeSpeed}
+            changeSpeed={this.changeSpeed}
             changeGridSize={this.changeGridSize}
             clear={this.clearButton}
             seed={this.seedButton}
