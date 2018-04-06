@@ -4,11 +4,41 @@
 import React from 'react';
 import Grid from './Grid';
 
-const Buttons = (props) => (
-  <div>
+class Buttons extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      speedValue: "fast",
+      gridSizeValue: 0,
+    }
+  }
 
-  </div>
-);
+  handleSpeedChange = (e) => {
+    const { value } = e.target;
+    this.setState({speedValue: value});
+    this.props.changeSpeed(value);
+  }
+
+  render() {
+    return (
+      <div>
+        <button className="btn btn-default" onClick={this.props.seed}>
+          Seed
+        </button>
+        <button className="btn btn-default" onClick={this.props.playButton}>
+          Play
+        </button>
+        <button className="btn btn-default" onClick={this.props.pauseButton}>
+          Pause
+        </button>
+        <select value={this.state.speedValue} onChange={this.handleSpeedChange}>
+          <option value="slow">Slow</option>
+          <option value="fast">Fast</option>
+        </select>
+      </div>
+    );
+  }
+}
 
 class HomeContainer extends React.Component <{}> {
   constructor(props: {}) {
@@ -26,10 +56,9 @@ class HomeContainer extends React.Component <{}> {
 
   componentDidMount() {
     this.loadInitialData();
-    this.seed();
-    this.playButton();
   }
 
+  // get initial data/props from config (title, etc)
   loadInitialData() {
     const promises = [];
     promises.push(this.props.loadInitialData());
@@ -38,13 +67,17 @@ class HomeContainer extends React.Component <{}> {
     }).catch(err => console.log('Error loading data in HomeContainer', err));
   }
 
+  // set up interval to run play method
   playButton = () => {
     // start over setInterval for specified intervalId
-    clearInterval(this.intervalId);
+    if(this.intervalId){
+      clearInterval(this.intervalId);
+    }
     // every interval of this.speed, call this.play
     this.intervalId = setInterval(this.play, this.speed);
   }
 
+  // run one generation
   play = () => {
     let g = this.state.grid;
     let g2 = this.state.grid;
@@ -79,11 +112,12 @@ class HomeContainer extends React.Component <{}> {
     });
   }
 
+  // pauses simulation
   pauseButton = () => {
     clearInterval(this.intervalId);
   }
 
-  // arrow functions style insures correct 'this' is inside it
+  // called when user selects an individual box component
   selectBox = (row, col) => {
     // create copy of grid array so we can modify it
     let grid = this.state.grid;
@@ -95,8 +129,25 @@ class HomeContainer extends React.Component <{}> {
     })
   }
 
-  // populates the grid as soon as the component is mounted
-  seed = () => {
+  changeSpeed = (speed) => {
+    switch (speed) {
+    case 'slow':
+      this.speed = 1000;
+      if (this.state.generation > 0){
+        this.playButton();
+      }
+      break;
+    default:
+    case 'fast':
+      this.speed = 100;
+      if (this.state.generation > 0){
+        this.playButton();
+      }
+    }
+  }
+
+  // populates the grid with a random amount of active boxes
+  seedButton = () => {
     let { grid } = this.state;
     // loop over each value in grid array and inner arrays
     for (let i = 0; i < this.rows; i++) {
@@ -107,6 +158,7 @@ class HomeContainer extends React.Component <{}> {
         }
       }
     }
+    // set current grid state to new seeded grid
     this.setState({
       grid: grid,
     })
@@ -121,11 +173,10 @@ class HomeContainer extends React.Component <{}> {
         <Buttons
           playButton={this.playButton}
           pauseButton={this.pauseButton}
-          slow{this.slow}
-          fast={this.fast}
-          clear={this.clear}
-          seed={this.seed}
-          gridSize={this.gridSize}
+          changeSpeed= {this.changeSpeed}
+          gridSize={this.changeGridSize}
+          clear={this.clearButton}
+          seed={this.seedButton}
         />
         <Grid
           gridArray={this.state.grid}
