@@ -4,6 +4,12 @@
 import React from 'react';
 import Grid from './Grid';
 
+const Buttons = (props) => (
+  <div>
+
+  </div>
+);
+
 class HomeContainer extends React.Component <{}> {
   constructor(props: {}) {
     super(props);
@@ -73,6 +79,10 @@ class HomeContainer extends React.Component <{}> {
     });
   }
 
+  pauseButton = () => {
+    clearInterval(this.intervalId);
+  }
+
   // arrow functions style insures correct 'this' is inside it
   selectBox = (row, col) => {
     // create copy of grid array so we can modify it
@@ -108,6 +118,15 @@ class HomeContainer extends React.Component <{}> {
       <div className="text-center">
         <h1 id="site-title">{title}</h1>
         <h5>Generations: {this.state.generation}</h5>
+        <Buttons
+          playButton={this.playButton}
+          pauseButton={this.pauseButton}
+          slow{this.slow}
+          fast={this.fast}
+          clear={this.clear}
+          seed={this.seed}
+          gridSize={this.gridSize}
+        />
         <Grid
           gridArray={this.state.grid}
           rows={this.rows}
