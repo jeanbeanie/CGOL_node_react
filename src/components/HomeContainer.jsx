@@ -163,15 +163,17 @@ class HomeContainer extends React.Component <{}> {
     return (
       <div className="text-center">
         <h1 id="site-title">{title}</h1>
-        <h5>Generations: {this.state.generation}</h5>
-        <Buttons
-          play={this.playButton}
-          pause={this.pauseButton}
-          changeSpeed= {this.changeSpeed}
-          changeGridSize={this.changeGridSize}
-          clear={this.clearButton}
-          seed={this.seedButton}
-        />
+        <div id="toolbar">
+          <h6>GENERATIONS: {this.state.generation}</h6>
+          <Buttons
+            play={this.playButton}
+            pause={this.pauseButton}
+            changeSpeed= {this.changeSpeed}
+            changeGridSize={this.changeGridSize}
+            clear={this.clearButton}
+            seed={this.seedButton}
+          />
+        </div>
         <Grid
           gridArray={this.state.grid}
           rows={this.rows}
