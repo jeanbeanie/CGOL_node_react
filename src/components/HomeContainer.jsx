@@ -20,6 +20,7 @@ class HomeContainer extends React.Component <{}> {
 
   componentDidMount() {
     this.loadInitialData();
+    this.seed();
   }
 
   loadInitialData() {
@@ -37,6 +38,23 @@ class HomeContainer extends React.Component <{}> {
     // flip the bool value of the spot in arr that corresponds to box component
     grid[row][col] = !grid[row][col];
     // set grid to our updated grid
+    this.setState({
+      grid: grid,
+    })
+  }
+
+  // populates the grid as soon as the component is mounted
+  seed = () => {
+    let { grid } = this.state;
+    // loop over each value in grid array and inner arrays
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        // 25% chance to set a box's value to 'true'
+        if (Math.floor(Math.random() * 4) === 1) {
+          grid[i][j] = true;
+        }
+      }
+    }
     this.setState({
       grid: grid,
     })
