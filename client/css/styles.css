@@ -1,9 +1,18 @@
 body {
   background-image: url(http://localhost:3000/img/grass_pattern.jpg);
   background-size: auto;
+  padding-bottom: 10rem;
+}
+a {
+  color: pink;
 }
 
-h1, h2, h3, h4, h5 {
+a:hover {
+  color: brown;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, #toolbar, footer {
   color: white;
   margin: auto;
   text-align: center;
@@ -16,9 +25,14 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0px 0px 1rem #77421c;
 }
 
-#site-title {
+footer {
+  margin-top: 1rem;
 }
-  
+
+#site-title {
+  /* something will go here */
+}
+
 .box {
   display: inline-block;       
   border: 1px solid black;
