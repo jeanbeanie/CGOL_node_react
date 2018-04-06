@@ -8,15 +8,21 @@ class Buttons extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      speedValue: "fast",
-      gridSizeValue: 0,
+      speed: "fast",
+      gridSize: "medium",
     }
   }
 
   handleSpeedChange = (e) => {
     const { value } = e.target;
-    this.setState({speedValue: value});
+    this.setState({speed: value});
     this.props.changeSpeed(value);
+  }
+
+  handleGridSizeChange = (e) => {
+    const { value } = e.target;
+    this.setState({gridSize: value});
+    this.props.changeGridSize(value);
   }
 
   render() {
@@ -34,9 +40,14 @@ class Buttons extends React.Component {
         <button className="btn btn-default" onClick={this.props.pause}>
           Pause
         </button>
-        <select value={this.state.speedValue} onChange={this.handleSpeedChange}>
+        <select value={this.state.speed} onChange={this.handleSpeedChange}>
           <option value="slow">Slow</option>
           <option value="fast">Fast</option>
+        </select>
+        <select value={this.state.gridSize} onChange={this.handleGridSizeChange}>
+          <option value="small">Small 20x10</option>
+          <option value="medium">Medium 50x30</option>
+          <option value="large">Large 70x50</option>
         </select>
       </div>
     );
@@ -49,6 +60,7 @@ class HomeContainer extends React.Component <{}> {
     this.speed = 100;
     this.rows = 30;
     this.cols = 50;
+    isPaused: true,
 
     this.state = {
       generation: 0,
@@ -78,6 +90,7 @@ class HomeContainer extends React.Component <{}> {
     }
     // every interval of this.speed, call this.play
     this.intervalId = setInterval(this.play, this.speed);
+    this.isPaused = false;
   }
 
   // run one generation
@@ -118,6 +131,7 @@ class HomeContainer extends React.Component <{}> {
   // pauses simulation
   pauseButton = () => {
     clearInterval(this.intervalId);
+    this.isPaused = true;
   }
 
   clearButton = () => {
@@ -158,6 +172,23 @@ class HomeContainer extends React.Component <{}> {
     }
   }
 
+  changeGridSize = (size) => {
+    switch (size) {
+    case 'small':
+      this.cols = 20;
+      this.rows = 10;
+      break;
+    case 'medium':
+    default:
+      this.cols = 50;
+      this.rows = 30;
+      break;
+    case 'large':
+      this.cols = 70;
+      this.rows = 50;
+    }
+    this.clearButton()
+  }
   // populates the grid with a random amount of active boxes
   seedButton = () => {
     let { grid } = this.state;
@@ -186,7 +217,7 @@ class HomeContainer extends React.Component <{}> {
           play={this.playButton}
           pause={this.pauseButton}
           changeSpeed= {this.changeSpeed}
-          gridSize={this.changeGridSize}
+          changeGridSize={this.changeGridSize}
           clear={this.clearButton}
           seed={this.seedButton}
         />
