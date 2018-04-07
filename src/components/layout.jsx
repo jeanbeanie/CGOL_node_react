@@ -4,7 +4,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import Footer from './Footer';
 type Props = {
   children: React.Node,
 };
@@ -12,9 +12,7 @@ type Props = {
 const Layout = (props: Props) => (
   <div className="container" id="layout-container">
     {props.children}
-    <footer className="text-center">
-      Made with <span role="img" aria-label="love">🌺</span>  by <a href="http://www.github.com/jeanbeanie" rel="noopener noreferrer" target="_blank">Jean</a>
-    </footer>
+    <Footer />
   </div>
 );
 
