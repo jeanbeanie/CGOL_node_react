@@ -16,7 +16,6 @@ A project to get me warmed up making simple games with React.js, and an excuse t
 
 ##### ...or watch your tests as you write code
 > ```npm watch```
-### Have fun!
 ----------------------
 
 ...written by me <http://www.twitter.com/onlyjeanbean> ✌🏽🌺
